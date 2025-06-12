@@ -2,7 +2,9 @@ package org.wit.edu.pl.elements;
 import com.github.javafaker.*;
 import com.github.javafaker.service.FakeValuesService;
 import com.github.javafaker.service.RandomService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.params.provider.Arguments;
@@ -21,15 +23,17 @@ import java.util.stream.Stream;
 public class TextBoxIT {
     static Faker getData = new Faker(Locale.ENGLISH, new Random(24));
     static FakeValuesService write = new FakeValuesService(Locale.ENGLISH, new RandomService(new Random(24)));
-    WebDriver driver = new ChromeDriver();
-    TextBox textBox = new TextBox(driver);
+    ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+    ThreadLocal<TextBox> textBox = new ThreadLocal<>();
 
     @BeforeEach
     public void createDriver(){
-        driver.manage().window().maximize();
-        textBox.openPage();
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        new Actions(driver).pause(Duration.ofSeconds(5)).perform();
+        driver.set(new ChromeDriver());
+        textBox.set(new TextBox(driver.get()));
+        driver.get().manage().window().maximize();
+        textBox.get().openPage();
+        JavascriptExecutor js = (JavascriptExecutor) driver.get();
+        new Actions(driver.get()).pause(Duration.ofSeconds(2)).perform();
         js.executeScript(
                 "let adds = document.querySelectorAll('iframe, .advertisement');" +
                         "adds.forEach(a => a.remove());");
@@ -38,20 +42,25 @@ public class TextBoxIT {
 
     }
 
+    @AfterEach
+    public void closePage(){
+        driver.get().quit();
+    }
+
     @ParameterizedTest
     @MethodSource
     public void fillAllFields(List<String> data){
-        textBox.fillFullName(data.get(0));
-        textBox.fillEmail(data.get(1));
-        textBox.fillCurrentAddress(data.get(2));
-        textBox.fillPermanentAddress(data.get(3));
-        textBox.clickSubmit();
+        textBox.get().fillFullName(data.get(0));
+        textBox.get().fillEmail(data.get(1));
+        textBox.get().fillCurrentAddress(data.get(2));
+        textBox.get().fillPermanentAddress(data.get(3));
+        textBox.get().clickSubmit();
 
         assertAll(
-                () -> assertEquals(data.get(0), textBox.getOutputName()),
-                () -> assertEquals(data.get(1), textBox.getOutputEmail()),
-                () -> assertEquals(data.get(2), textBox.getCurrentAddress()),
-                () -> assertEquals(data.get(3), textBox.getPermanentAddress())
+                () -> assertEquals(data.get(0), textBox.get().getOutputName()),
+                () -> assertEquals(data.get(1), textBox.get().getOutputEmail()),
+                () -> assertEquals(data.get(2), textBox.get().getCurrentAddress()),
+                () -> assertEquals(data.get(3), textBox.get().getPermanentAddress())
                 );
 
     }
@@ -66,4 +75,12 @@ public class TextBoxIT {
                 )
         ));
     }
+
+    @Test
+    public void invalidEmail(){
+        textBox.get().fillEmail(write.bothify("###??example.com"));
+        textBox.get().clickSubmit();
+        assertTrue(textBox.get().hasInvalidEmail());
+    }
+
 }

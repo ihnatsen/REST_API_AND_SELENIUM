@@ -7,6 +7,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.wit.edu.pl.BasePage;
 
 import java.time.Duration;
+import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TextBox extends BasePage {
 
@@ -69,6 +72,8 @@ public class TextBox extends BasePage {
 
     public void clickSubmit(){
         JavascriptExecutor js = (JavascriptExecutor) driver;
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(1));
+        submitButton = wait.until(ExpectedConditions.elementToBeClickable(submitButton));
         js.executeScript("arguments[0].click()", submitButton);
     }
 
@@ -91,6 +96,12 @@ public class TextBox extends BasePage {
     }
     public String getPermanentAddress(){
         return getOutputField(outputPermanentAddress);
+    }
+
+    public Boolean hasInvalidEmail(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(1));
+        wait.until((WebDriver driver) -> inputEmail.getAttribute("class").contains("error"));
+        return true;
     }
 
 }
