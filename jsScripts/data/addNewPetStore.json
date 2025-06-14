@@ -1,0 +1,20 @@
+[
+  {
+    "id": 500,
+    "category_id": 43,
+    "category_name": "Kompot",
+    "name": "cat",
+    "tag_id": 23,
+    "tag_name": "cat",
+    "status": "available"
+  },
+  {
+    "id": 501,
+    "category_id": 44,
+    "category_name": "Murka",
+    "name": "dog",
+    "tag_id": 24,
+    "tag_name": "dog",
+    "status": "sold"
+  }
+]
