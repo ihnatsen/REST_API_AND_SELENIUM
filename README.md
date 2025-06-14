@@ -9,17 +9,12 @@
 <tbody>
 <tr>
 <td>Testing</td>
-<td>JUnit <img src="https://junit.org/junit5/assets/img/junit5-logo.png" width="16" height="16"></td>
+<td>Postman <img src="https://avatars.githubusercontent.com/u/10251060?s=200&v=4" width="16" height="16"></td>
 </tr>
 <tr>
-<td>Main package</td>
-<td>Selenium <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUXu8NnBJh1xU1MUXTNbs4ElxdVwGb2hsA-w&s" width="15" height="15">, rest-assured <img src="https://avatars.githubusercontent.com/u/19369327?s=48&v=4" width="15" height="15" alt=""></td>
-</tr>
-<td>Add package</td>
-<td>Jackson <img src="https://mvnrepository.com/img/e475dbe4f6f94cbb434b8c4c7a622170" width="15" height="15">, java-faker <img src="https://avatars.githubusercontent.com/u/164113?s=48&v=4" width="15" height="15"></td>
-<tr>
-
+<td>jsScripts</td>
+<td>scripts <img src="https://programowanie.oeiizk.waw.pl/grafika/jezyki/javascript.png" width="16" height="16">, data <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/JSON_vector_logo.svg/1024px-JSON_vector_logo.svg.png" width="16" height="16"></td>
 </tr>
 </tbody>
 </table>
-This repository is created for training purposes. It contains a test automation framework based on <a href="https://www.selenium.dev/">Selenium</a> and uses additional libraries such as <a href="https://rest-assured.io/">Rest Assured</a> for API testing.
+This branch is created for training postman. It contains js scripts and data for tests.
