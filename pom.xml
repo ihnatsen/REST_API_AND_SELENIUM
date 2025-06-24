@@ -17,7 +17,8 @@
         <rest-assured.version>5.5.5</rest-assured.version>
         <jackson.version>2.19.0</jackson.version>
         <javafaker.version>1.0.2</javafaker.version>
-        <junit5-params>5.13.1</junit5-params>
+        <junit5-params.version>5.13.1</junit5-params.version>
+        <typesave.version>1.4.3</typesave.version>
     </properties>
 
     <dependencies>
@@ -65,10 +66,16 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
-            <version>${junit5-params}</version>
+            <version>${junit5-params.version}</version>
             <scope>test</scope>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.typesafe/config -->
+        <dependency>
+            <groupId>com.typesafe</groupId>
+            <artifactId>config</artifactId>
+            <version>${typesave.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

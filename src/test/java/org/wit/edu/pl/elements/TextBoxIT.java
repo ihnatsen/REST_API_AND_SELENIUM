@@ -9,11 +9,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Actions;
-import java.time.Duration;
+import org.wit.edu.pl.WebDriverFactory;
+import org.wit.edu.pl.elements.TextBox.TextBox;
+import org.wit.edu.pl.support.ConfigReader;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -21,30 +20,20 @@ import java.util.stream.Stream;
 
 
 public class TextBoxIT {
+    static String browser = ConfigReader.get("browser");
     static Faker getData = new Faker(Locale.ENGLISH, new Random(24));
     static FakeValuesService write = new FakeValuesService(Locale.ENGLISH, new RandomService(new Random(24)));
-    ThreadLocal<WebDriver> driver = new ThreadLocal<>();
     ThreadLocal<TextBox> textBox = new ThreadLocal<>();
-
     @BeforeEach
     public void createDriver(){
-        driver.set(new ChromeDriver());
-        textBox.set(new TextBox(driver.get()));
-        driver.get().manage().window().maximize();
+        textBox.set(new TextBox(WebDriverFactory.getWebDriver(browser)));
         textBox.get().openPage();
-        JavascriptExecutor js = (JavascriptExecutor) driver.get();
-        new Actions(driver.get()).pause(Duration.ofSeconds(2)).perform();
-        js.executeScript(
-                "let adds = document.querySelectorAll('iframe, .advertisement');" +
-                        "adds.forEach(a => a.remove());");
-        js.executeScript("document.querySelector('footer').remove();");
-
-
+        textBox.get().deleteAdds();
     }
 
     @AfterEach
     public void closePage(){
-        driver.get().quit();
+        textBox.get().closePage();
     }
 
     @ParameterizedTest

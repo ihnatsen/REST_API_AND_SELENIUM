@@ -2,35 +2,27 @@ package org.wit.edu.pl.elements;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Actions;
-import java.time.Duration;
+import org.wit.edu.pl.WebDriverFactory;
+import org.wit.edu.pl.elements.RadioButton.RadioButton;
+import org.wit.edu.pl.support.ConfigReader;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RadioButtonIT {
-    ThreadLocal<WebDriver> driver = new ThreadLocal<>();
     ThreadLocal<RadioButton> radioButton = new ThreadLocal<>();
+    static String browser = ConfigReader.get("browser");
 
     @BeforeEach
     public void createDriver(){
-        driver.set(new ChromeDriver());
-        radioButton.set(new RadioButton(driver.get()));
-        driver.get().manage().window().maximize();
+
+        radioButton.set(new RadioButton(WebDriverFactory.getWebDriver(browser)));
         radioButton.get().openPage();
-        JavascriptExecutor js = (JavascriptExecutor) driver.get();
-        new Actions(driver.get()).pause(Duration.ofSeconds(5)).perform();
-        js.executeScript(
-                "let adds = document.querySelectorAll('iframe, .advertisement');" +
-                        "adds.forEach(a => a.remove());");
-        js.executeScript("document.querySelector('footer').remove();");
+        radioButton.get().deleteAdds();
     }
 
     @AfterEach
     public void closePage(){
-        driver.get().quit();
+        radioButton.get().closePage();
     }
 
     @Test
