@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.Optional;
 
 public abstract class BasePage  {
     private static final Duration DEFAULT_TIMEOUT = Duration.ofSeconds(10);
@@ -33,7 +34,7 @@ public abstract class BasePage  {
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
-    protected void waitUntilTheConditions(Boolean conditions){
+    protected void waitUntilBeTheConditions(Boolean conditions){
         wait.until((WebDriver driver) -> conditions);
     }
 
@@ -51,7 +52,11 @@ public abstract class BasePage  {
         driver.get(URL);
     }
 
-    public void closePage(){driver.quit();}
+    public void quitDriver(){driver.quit();}
+
+    public void closePage(){
+        driver.close();
+    }
 
     public void deleteAdds(){
         make.pause(Duration.ofSeconds(5)).perform();
@@ -64,6 +69,11 @@ public abstract class BasePage  {
     public Boolean hasAttribute(WebElement element, String attributeName, String value){
         return element.getAttribute(attributeName).contains(value);
     }
+
+    public Boolean hasAttribute(WebElement element, String attributeName){
+        return Optional.ofNullable(element.getAttribute(attributeName)).isPresent();
+    }
+
 
     protected void clearField(WebElement element){
         element.clear();

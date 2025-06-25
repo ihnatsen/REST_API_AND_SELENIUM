@@ -41,8 +41,8 @@ public class WebTablesIT {
     }
 
     @AfterEach
-    public void closePage(){
-        theWebTablest.get().closePage();
+    public void quiteBrowser(){
+        theWebTablest.get().quitDriver();
     }
     @ParameterizedTest
     @MethodSource

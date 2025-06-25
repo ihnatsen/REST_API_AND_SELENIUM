@@ -9,27 +9,28 @@ import org.wit.edu.pl.support.ConfigReader;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RadioButtonIT {
-    ThreadLocal<RadioButton> radioButton = new ThreadLocal<>();
+    ThreadLocal<RadioButton> theRadioButton = new ThreadLocal<>();
     static String browser = ConfigReader.get("browser");
 
     @BeforeEach
     public void createDriver(){
-
-        radioButton.set(new RadioButton(WebDriverFactory.getWebDriver(browser)));
-        radioButton.get().openPage();
-        radioButton.get().deleteAdds();
+        theRadioButton.set(new RadioButton(WebDriverFactory.getWebDriver(browser)));
+        RadioButton radioButton = theRadioButton.get();
+        radioButton.openPage();
+        radioButton.deleteAdds();
     }
 
     @AfterEach
-    public void closePage(){
-        radioButton.get().closePage();
+    public void quiteBrowser(){
+        theRadioButton.get().quitDriver();
     }
 
     @Test
     public void clickToButtons(){
-        boolean hasYes = radioButton.get().outputHas(radioButton.get().clickToYesButton());
-        boolean hasImpressive = radioButton.get().outputHas(radioButton.get().clickToImpressiveButton());
-        boolean hasDisabled = radioButton.get().noButtonHasDisabledAttribute();
+        RadioButton radioButton = theRadioButton.get();
+        boolean hasYes = radioButton.outputHas(radioButton.clickToYesButton());
+        boolean hasImpressive = radioButton.outputHas(radioButton.clickToImpressiveButton());
+        boolean hasDisabled = radioButton.noButtonHasDisabledAttribute();
         assertAll(
                 () -> assertTrue(hasYes),
                 () -> assertTrue(hasImpressive),

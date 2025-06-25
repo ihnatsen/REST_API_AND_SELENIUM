@@ -90,7 +90,7 @@ public class TextBox extends BasePage {
     }
 
     public Boolean hasInvalidEmail(){
-        waitUntilTheConditions(inputEmail.getAttribute("class").contains("error"));
+        waitUntilBeTheConditions(inputEmail.getAttribute("class").contains("error"));
         return true;
     }
 

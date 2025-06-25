@@ -5,7 +5,8 @@ public enum PageMenu {
     Buttons("buttons"),
     RadioButton("radio-button"),
     TextButton("text-box"),
-    WebTables("webtables");
+    WebTables("webtables"),
+    Links("links");
 
     private final String URL;
 

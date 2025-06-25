@@ -40,7 +40,7 @@ public class EmployeeTable extends BasePage implements Table {
     WebElement delete;
 
     // That xpath lets to extract all WebElements, which contain cell value and are not empty.
-    @FindBy(xpath="(//div[@role='row' and div[not(span)]])[position()>1]//div[@role='gridcell' and normalize-space(.)]")
+    @FindBy(xpath="//div[@role='row' and div[not(span)][position()>1]]//div[@role='gridcell' and normalize-space()]")
     List<WebElement> webElementsCells;
 
 

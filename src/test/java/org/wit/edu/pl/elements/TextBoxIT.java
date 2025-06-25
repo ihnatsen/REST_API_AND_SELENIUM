@@ -23,33 +23,35 @@ public class TextBoxIT {
     static String browser = ConfigReader.get("browser");
     static Faker getData = new Faker(Locale.ENGLISH, new Random(24));
     static FakeValuesService write = new FakeValuesService(Locale.ENGLISH, new RandomService(new Random(24)));
-    ThreadLocal<TextBox> textBox = new ThreadLocal<>();
+    ThreadLocal<TextBox> theTextBox = new ThreadLocal<>();
     @BeforeEach
     public void createDriver(){
-        textBox.set(new TextBox(WebDriverFactory.getWebDriver(browser)));
-        textBox.get().openPage();
-        textBox.get().deleteAdds();
+        theTextBox.set(new TextBox(WebDriverFactory.getWebDriver(browser)));
+        TextBox textBox = theTextBox.get();
+        textBox.openPage();
+        textBox.deleteAdds();
     }
 
     @AfterEach
-    public void closePage(){
-        textBox.get().closePage();
+    public void quiteBrowser(){
+        theTextBox.get().quitDriver();
     }
 
     @ParameterizedTest
     @MethodSource
     public void fillAllFields(List<String> data){
-        textBox.get().fillFullName(data.get(0));
-        textBox.get().fillEmail(data.get(1));
-        textBox.get().fillCurrentAddress(data.get(2));
-        textBox.get().fillPermanentAddress(data.get(3));
-        textBox.get().clickSubmit();
+        TextBox textBox = theTextBox.get();
+        textBox.fillFullName(data.get(0));
+        textBox.fillEmail(data.get(1));
+        textBox.fillCurrentAddress(data.get(2));
+        textBox.fillPermanentAddress(data.get(3));
+        textBox.clickSubmit();
 
         assertAll(
-                () -> assertEquals(data.get(0), textBox.get().getOutputName()),
-                () -> assertEquals(data.get(1), textBox.get().getOutputEmail()),
-                () -> assertEquals(data.get(2), textBox.get().getCurrentAddress()),
-                () -> assertEquals(data.get(3), textBox.get().getPermanentAddress())
+                () -> assertEquals(data.get(0), textBox.getOutputName()),
+                () -> assertEquals(data.get(1), textBox.getOutputEmail()),
+                () -> assertEquals(data.get(2), textBox.getCurrentAddress()),
+                () -> assertEquals(data.get(3), textBox.getPermanentAddress())
                 );
 
     }
@@ -67,9 +69,11 @@ public class TextBoxIT {
 
     @Test
     public void invalidEmail(){
-        textBox.get().fillEmail(write.bothify("###??example.com"));
-        textBox.get().clickSubmit();
-        assertTrue(textBox.get().hasInvalidEmail());
+        TextBox textBox = theTextBox.get();
+
+        textBox.fillEmail(write.bothify("###??example.com"));
+        textBox.clickSubmit();
+        assertTrue(textBox.hasInvalidEmail());
     }
 
 }

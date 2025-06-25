@@ -10,36 +10,42 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class ButtonsIT {
-    ThreadLocal<Buttons> buttons = new ThreadLocal<>();
+    ThreadLocal<Buttons> theButtons = new ThreadLocal<>();
     static String browser = ConfigReader.get("browser");
 
     @BeforeEach
     public void createDriver(){
-        buttons.set(new Buttons(WebDriverFactory.getWebDriver(browser)));
-        buttons.get().openPage();
-        buttons.get().deleteAdds();
+        theButtons.set(new Buttons(WebDriverFactory.getWebDriver(browser)));
+        Buttons buttons = theButtons.get();
+
+        buttons.openPage();
+        buttons.deleteAdds();
     }
 
     @AfterEach
-    public void closePage(){
-        buttons.get().closePage();
+    public void quiteBrowser(){
+        Buttons buttons = theButtons.get();
+        buttons.quitDriver();
     }
 
     @Test
     public void clickDoubleClick(){
-        buttons.get().clickDoubleClick();
-        assertEquals("You have done a double click", buttons.get().getDoubleClickMessage());
+        Buttons buttons = theButtons.get();
+        buttons.clickDoubleClick();
+        assertEquals("You have done a double click", buttons.getDoubleClickMessage());
     }
 
     @Test
     public void clickRightClick(){
-        buttons.get().clickRightClick();
-        assertEquals("You have done a right click", buttons.get().getRightClickMessage());
+        Buttons buttons = theButtons.get();
+        buttons.clickRightClick();
+        assertEquals("You have done a right click", buttons.getRightClickMessage());
     }
 
     @Test
     public void clickClickMe(){
-        buttons.get().clickClickMe();
-        assertEquals("You have done a dynamic click", buttons.get().getClickMeClickMessage());
+        Buttons buttons = theButtons.get();
+        buttons.clickClickMe();
+        assertEquals("You have done a dynamic click", buttons.getClickMeClickMessage());
     }
 }
