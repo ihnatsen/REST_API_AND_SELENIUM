@@ -15,8 +15,6 @@
 <td>Main package</td>
 <td>Selenium <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUXu8NnBJh1xU1MUXTNbs4ElxdVwGb2hsA-w&s" width="15" height="15">, rest-assured <img src="https://avatars.githubusercontent.com/u/19369327?s=48&v=4" width="15" height="15" alt=""></td>
 </tr>
-<td>Add package</td>
-<td>Jackson <img src="https://mvnrepository.com/img/e475dbe4f6f94cbb434b8c4c7a622170" width="15" height="15">, java-faker <img src="https://avatars.githubusercontent.com/u/164113?s=48&v=4" width="15" height="15"></td>
 <tr>
 
 </tr>
