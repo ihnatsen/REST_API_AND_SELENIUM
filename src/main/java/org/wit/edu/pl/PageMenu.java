@@ -2,11 +2,14 @@ package org.wit.edu.pl;
 import org.wit.edu.pl.support.ConfigReader;
 
 public enum PageMenu {
+    BaseURL(ConfigReader.get("baseURL")),
     Buttons("buttons"),
     RadioButton("radio-button"),
     TextButton("text-box"),
     WebTables("webtables"),
-    Links("links");
+    Links("links"),
+    BrokenLinksImages("broken");
+
 
     private final String URL;
 
