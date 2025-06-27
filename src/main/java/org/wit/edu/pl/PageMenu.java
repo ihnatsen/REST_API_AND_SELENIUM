@@ -8,6 +8,7 @@ public enum PageMenu {
     TextButton("text-box"),
     WebTables("webtables"),
     Links("links"),
+    UploadAndDownload("upload-download"),
     BrokenLinksImages("broken");
 
 
